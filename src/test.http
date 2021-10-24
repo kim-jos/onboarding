@@ -1,0 +1,24 @@
+
+###Create new user
+POST http://localhost:3000/users/signup
+Content-Type: application/json
+
+{
+    "email": "test2@test.com",
+    "password": "test"
+}
+
+### Sign in as an existing user
+POST http://localhost:3000/users/signin
+Content-Type: application/json
+
+{
+    "email": "test2@test.com",
+    "password": "test"
+}
+
+### Signout
+POST http://localhost:3000/users/signout
+
+### whoami
+GET  http://localhost:3000/users/whoami
