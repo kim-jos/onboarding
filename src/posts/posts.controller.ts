@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, NotFoundException, Param, Patch, Post, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, NotFoundException, Param, Patch, Post, Query, UseGuards, UseInterceptors } from '@nestjs/common';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { isAuthorGuard } from 'src/guards/is-author.guard';
 import { CurrentUser } from 'src/users/decorator/current-user.decorator';
@@ -30,8 +30,10 @@ export class PostsController {
     }
 
     @Get()
-    findAllPosts() {
-        return this.postsService.findAll();
+    findAllPosts(@Query() query) {
+        const offset = query.offset;
+        const limit = query.limit;
+        return this.postsService.findAll(offset, limit);
     }
 
     @Patch('/:id')

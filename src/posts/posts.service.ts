@@ -18,15 +18,13 @@ export class PostsService {
         return await this.repo.findOne(id)
     }
     
-    async findAll(offset?: number, limit?: number) {
-        const [items, count] = await this.repo.findAndCount({
-            relations: ['user'],
+    async findAll(offset: number = 0, limit: number = 10) {
+        const [posts, count] = await this.repo.findAndCount({
             order: { id: 'ASC' },
             skip: offset,
             take: limit
         });
-        return { items, count }
-        return this.repo.find();
+        return { posts, count }
     }
 
     createPost(post: PostDto, user: UsersEntity) {

@@ -24,50 +24,200 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Basic CRUD operation program.
 
-## Installation
+## 구현한 방법과 이유에 대한 간략한 내용
+Nestjs provides very good architecture for any project. 
+I followed the architecture provided by Nestjs out-of-the-box.
+I have two main modules: Users and Posts.
+For each modules there is a controller, service, and repository (the repository is automatically created by TypeOrm).
+All the HTTP requests first go to the controller, all the business logic related to the HTTP request is stored in the service and all access to the database is in the repository.
 
-```bash
-$ npm install
+```
+| Controller  | Service || Repository  |
+| ------------- | ------------- || ------------- |
+| UsersController  | UsersService  || UsersRepository  |
+| PostsController  | PostsService  || PostsRepository  |
+| ------------- | ------------- || ------------- |
 ```
 
-## Running the app
+### Authentication
+#### Cookie-session
+I used a cookie session to implement authentication.
+The password was hashed before storing in the database to prevent anyone from accessing it. 
 
-```bash
-# development
-$ npm run start
+Instead of simply hashing the password I combined it with a salt(random string). I did this because even though the password is hashed people can still guess the password by brute forcing different passwords. By hashing the password with a salt it makes it significantly more difficult to find the password.
 
-# watch mode
-$ npm run start:dev
+In order to read, create, update, or delete any post, you have to be signed in. I implemented this using a Nestjs Guard. I created a "AuthGuard" which returns a session userId.
 
-# production mode
-$ npm run start:prod
+### Authorization
+If authentication deals with whether a user is signed in or not, authorization deals with whether a user is authorized to execute some action. For example, there are actions only "admin" level users can do. In this project only the user that is the author of the post can update or delete it. This I also implemented using a Nestjs Guard. I created a "isAuthorGuard" the return a boolean on whether the post author id is the same as the currently logged in user's id. If false, the user is not authorized to udpate or delete the post.
+
+## 자세한 실행 방법(endpoint 호출방법)
+## API 명세(request/response 서술 필요)
+### Base URL: localhost:3000
+### Users
+#### Signin
+```POST users/signin```
+Request
 ```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+{
+  "email": "test1@test.com", 
+  "password":"test"
+} 
 ```
+Response
+Success
+```
+{
+  "id": 1,
+  "email": "test1@test.com",
+  "password": "ba3e5dfd2f260935.a96ea0ee22100515a41ed1dce08b744caabdf33faa9e079eb1dc197de083d5d7"
+}
+```
+Error
+```
+{
+  "statusCode": 404,
+  "message": "user not found",
+  "error": "Not Found"
+}
+```
+#### Signout
+```POST users/signout```
+#### Signup
+```POST users/signup```
+Request
+```
+{
+  "email": "test1@test.com", 
+  "password":"test1"
+} 
+```
+Response
+Success
+```
+{
+  "email": "test@test.com",
+  "password": "cd78938da67b5e24.8949cf15391517951296849ac7a6ff601f6f53f081db6f5b41274b2bd93ef302",
+  "id": 1
+}
+```
+Error
+```
+{
+  "statusCode": 400,
+  "message": "Email in use",
+  "error": "Bad Request"
+}
+```
+#### whoami 
+Check to see who is currently signed in
+```GET users/whoami```
 
-## Support
+### Posts
+#### Create Post
+```POST posts```
+Request
+{
+    "post": "test1"
+}
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Response
+Success
+```
+{
+  "post": "test3",
+  "date": "2021-10-26T22:56:19.257Z",
+  "user": {
+    "id": 1,
+    "email": "test1@test.com",
+    "password": "ba3e5dfd2f260935.a96ea0ee22100515a41ed1dce08b744caabdf33faa9e079eb1dc197de083d5d7"
+  },
+  "author": 1,
+  "id": 4
+}
+```
+Error
+```
+{
+  "statusCode": 403,
+  "message": "Forbidden resource",
+  "error": "Forbidden"
+}
+```
+#### Find Post
+```GET posts/{id}```
+Response
+Success
+{
+  "id": postId,
+  "post": "postContent",
+  "date": "DatePosted",
+  "author": authorId
+}
 
-## Stay in touch
+Error
+```
+{
+  "statusCode": 404,
+  "message": "Post not found",
+  "error": "Not Found"
+}
+```
+#### Find All Posts
+```GET posts?limit={number}&offset={number}```
+Response
+Success
+```
+{
+  "posts": [
+    {PostEntity},
+    {PostEntity}
+  ],
+  "count": "countNumber"
+}
+```
+Error
+```
+{
+  "statusCode": 403,
+  "message": "Forbidden resource",
+  "error": "Forbidden"
+}
+```
+#### Update Post
+```PATCH posts/{id}```
+Request
+{
+    "post": "updateTest1"
+}
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+Response
+Success
+```
+{
+  "id": postId,
+  "post": "updatedPostContent",
+  "date": "datePostFirstCreated",
+  "author": authorId
+}
+```
+Error
+```
+{
+  "statusCode": 403,
+  "message": "Forbidden resource",
+  "error": "Forbidden"
+}
+```
+#### Delete Post
+```DELETE posts/{id}```
+Error
+```
+{
+  "statusCode": 403,
+  "message": "Forbidden resource",
+  "error": "Forbidden"
+}
+```
