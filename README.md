@@ -33,13 +33,6 @@ I have two main modules: Users and Posts.
 For each modules there is a controller, service, and repository (the repository is automatically created by TypeOrm).
 All the HTTP requests first go to the controller, all the business logic related to the HTTP request is stored in the service and all access to the database is in the repository.
 
-```
-| Controller  | Service || Repository  |
-| ------------- | ------------- || ------------- |
-| UsersController  | UsersService  || UsersRepository  |
-| PostsController  | PostsService  || PostsRepository  |
-| ------------- | ------------- || ------------- |
-```
 
 ### Authentication
 #### Cookie-session
@@ -59,6 +52,7 @@ If authentication deals with whether a user is signed in or not, authorization d
 ### Users
 #### Signin
 ```POST users/signin```
+
 Request
 ```
 {
@@ -67,7 +61,8 @@ Request
 } 
 ```
 Response
-Success
+
+*Success*
 ```
 {
   "id": 1,
@@ -75,7 +70,7 @@ Success
   "password": "ba3e5dfd2f260935.a96ea0ee22100515a41ed1dce08b744caabdf33faa9e079eb1dc197de083d5d7"
 }
 ```
-Error
+*Error*
 ```
 {
   "statusCode": 404,
@@ -87,6 +82,7 @@ Error
 ```POST users/signout```
 #### Signup
 ```POST users/signup```
+
 Request
 ```
 {
@@ -95,7 +91,7 @@ Request
 } 
 ```
 Response
-Success
+*Success*
 ```
 {
   "email": "test@test.com",
@@ -103,7 +99,7 @@ Success
   "id": 1
 }
 ```
-Error
+*Error*
 ```
 {
   "statusCode": 400,
@@ -118,13 +114,15 @@ Check to see who is currently signed in
 ### Posts
 #### Create Post
 ```POST posts```
+
 Request
 {
     "post": "test1"
 }
 
 Response
-Success
+
+*Success*
 ```
 {
   "post": "test3",
@@ -138,7 +136,7 @@ Success
   "id": 4
 }
 ```
-Error
+*Error*
 ```
 {
   "statusCode": 403,
@@ -148,8 +146,10 @@ Error
 ```
 #### Find Post
 ```GET posts/{id}```
+
 Response
-Success
+
+*Success*
 {
   "id": postId,
   "post": "postContent",
@@ -157,7 +157,7 @@ Success
   "author": authorId
 }
 
-Error
+*Error*
 ```
 {
   "statusCode": 404,
@@ -168,7 +168,8 @@ Error
 #### Find All Posts
 ```GET posts?limit={number}&offset={number}```
 Response
-Success
+
+*Success*
 ```
 {
   "posts": [
@@ -178,7 +179,7 @@ Success
   "count": "countNumber"
 }
 ```
-Error
+*Error*
 ```
 {
   "statusCode": 403,
@@ -188,13 +189,15 @@ Error
 ```
 #### Update Post
 ```PATCH posts/{id}```
+
 Request
 {
     "post": "updateTest1"
 }
 
 Response
-Success
+
+*Success*
 ```
 {
   "id": postId,
@@ -203,7 +206,7 @@ Success
   "author": authorId
 }
 ```
-Error
+*Error*
 ```
 {
   "statusCode": 403,
@@ -213,7 +216,7 @@ Error
 ```
 #### Delete Post
 ```DELETE posts/{id}```
-Error
+*Error*
 ```
 {
   "statusCode": 403,
