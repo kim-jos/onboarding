@@ -31,7 +31,6 @@ export class UsersController {
 
     @Get('/whoami')
     whoami(@Session() user: UsersEntity) {
-        console.log('whoami');
         return user;
     }
 

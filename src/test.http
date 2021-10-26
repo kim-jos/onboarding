@@ -13,7 +13,7 @@ POST http://localhost:3000/users/signin
 Content-Type: application/json
 
 {
-    "email": "test2@test.com",
+    "email": "test1@test.com",
     "password": "test"
 }
 
@@ -22,3 +22,35 @@ POST http://localhost:3000/users/signout
 
 ### whoami
 GET  http://localhost:3000/users/whoami
+
+
+
+
+
+
+
+### Find all posts
+GET  http://localhost:3000/posts/
+
+### Find one post
+GET  http://localhost:3000/posts/6
+
+### Create post
+POST http://localhost:3000/posts/
+Content-Type: application/json
+
+{
+    "post": "thats cool man"
+}
+
+### Update post
+PATCH  http://localhost:3000/posts/6
+Content-Type: application/json
+
+{
+    "post": "chansme"
+}
+
+### Delete post
+DELETE   http://localhost:3000/posts/6
+Content-Type: application/json

@@ -34,7 +34,7 @@ export class UsersService {
     
     private async createUser(email, password) {
         const user = await this.repo.create({email, password})
-        this.repo.save(user);
+        await this.repo.save(user);
         return user;
     }
 
@@ -48,5 +48,10 @@ export class UsersService {
         if (storedHash !== hash.toString('hex')) throw new BadRequestException('wrong password')
         
         return user;
+    }
+
+    async findOne(id: number) {
+        if (!id) return null; // Need to return null cuz repo returns id of first user if id is null
+        return await this.repo.findOne(id);
     }
 }

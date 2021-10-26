@@ -11,8 +11,12 @@ export class PostsEntity {
     
     @Column()
     date: Date;
+    
+    @Column()
+    author: number;
 
-    // many posts one user
+    // many posts one user 
+    // or one user can write many posts
     @ManyToOne(() => UsersEntity, (user) => user.posts) 
     user: UsersEntity;
 }
