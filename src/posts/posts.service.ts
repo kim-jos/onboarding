@@ -49,6 +49,6 @@ export class PostsService {
         const post = await this.findOne(id);
         if (!post) throw new NotFoundException('Post not found');
         
-        return this.repo.delete(post);
+        return this.repo.remove(post);
     }
 }

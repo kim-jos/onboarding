@@ -5,7 +5,6 @@ import { CurrentUser } from 'src/users/decorator/current-user.decorator';
 import { CurrentUserInterceptor } from 'src/users/interceptor/current-user.interceptor';
 import { UsersEntity } from 'src/users/users.entity';
 import { PostDto } from './dto/post.dto';
-import { UpdatePostDto } from './dto/update-post.dto';
 import { PostsService } from './posts.service';
 
 @Controller('posts')
@@ -38,7 +37,7 @@ export class PostsController {
 
     @Patch('/:id')
     @UseGuards(isAuthorGuard)
-    updatePost(@Param('id') id: string, @Body() body: UpdatePostDto) {
+    updatePost(@Param('id') id: string, @Body() body: PostDto) {
         return this.postsService.updatePost(Number(id), body);
     }
 
