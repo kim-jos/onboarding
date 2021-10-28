@@ -43,7 +43,7 @@ Instead of simply hashing the password I combined it with a salt(random string) 
 In order to read, create, update, or delete any post, you have to be signed in. I implemented this using a Nestjs Guard which returns a session userId if the user is signed in.
 
 ### Authorization
-If authentication deals with whether a user is signed in or not, authorization deals with whether a user is authorized to execute some action. For example, there are actions only "admin" level users can do. In this project only the user that is the author of the post can update or delete it. This, I also implemented using a Nestjs Guard. I created a "isAuthorGuard" the return a boolean on whether the post author id is the same as the currently s in user's id. If false, the user is not authorized to udpate or delete the post.
+If authentication deals with whether a user is signed in or not, authorization deals with whether a user is authorized to execute some action. For example, there are actions only "admin" level users can do. In this project only the user that is the author of a post can update or delete it. This, I also implemented using a Nestjs Guard called "isAuthorGuard" that returns a boolean depending on whether the post's author id is the same as the currently signed in user's id. If false, the user is not authorized to udpate or delete the post.
 
 ## API 명세(request/response 서술 필요) / 자세한 실행 방법(endpoint 호출방법)
 
