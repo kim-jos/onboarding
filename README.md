@@ -229,9 +229,8 @@ Response
 }
 ```
 
-## Required Further Improvements
-### Problem:
+## Required Improvements
 #### 1. HTTP response includes the user's password. The password needs to be excluded for security purposes
-#### 2. Post entity includes an "author" column. This should be replaced with the user entity.
+#### 2. Post entity includes an "author" column. This should be replaced with the user column.
 
 
