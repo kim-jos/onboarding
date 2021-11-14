@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UsersEntity } from 'src/users/users.entity';
 import { Repository } from 'typeorm';
-import { PostDto } from './dto/post.dto';
+import { CreatePostDto } from './dto/post.dto';
 import { PostsEntity } from './posts.entity';
 
 @Injectable()
@@ -27,7 +27,7 @@ export class PostsService {
         return { posts, count }
     }
 
-    createPost(post: PostDto, user: UsersEntity) {
+    createPost(post: CreatePostDto, user: UsersEntity) {
         const date = new Date(Date.now());
         const newPost = this.repo.create({...post, date})
         newPost.user = user;

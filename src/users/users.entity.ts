@@ -1,6 +1,6 @@
 import { PostsEntity } from "src/posts/posts.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-
+import { Exclude } from 'class-transformer';
 @Entity()
 export class UsersEntity {
     @PrimaryGeneratedColumn()
@@ -10,6 +10,7 @@ export class UsersEntity {
     email: string;
     
     @Column()
+    @Exclude()
     password: string;
     
     // one user many posts

@@ -4,8 +4,8 @@ POST http://localhost:3000/users/signup
 Content-Type: application/json
 
 {
-    "email": "ㅋㅋ",
-    "password": ""
+    "email": "test1@joseph.com",
+    "password": "joseph"
 }
 
 ### Sign in as an existing user
@@ -13,8 +13,8 @@ POST http://localhost:3000/users/signin
 Content-Type: application/json
 
 {
-    "email": "test1@test.com",
-    "password": "test"
+    "email": "test1@joseph.com",
+    "password": "joseph"
 }
 
 ### Signout
